@@ -5,11 +5,14 @@
 
 (def canvas (.getElementById js/document "clock"))
 (def context (.getContext canvas "2d"))
-(set! (.-height canvas) height)
 (set! (.-width canvas) width)
+(set! (.-height canvas) height)
 (set! (.-fillStyle context) "#00f")
 
-(.beginPath context)
-(.arc context (/ width 2) (/ height 2) 25 0 (* 2 3.14))
-(.closePath context)
-(.fill context)
+(defn drawCircle [& {:keys [x y radius]}]
+  (.beginPath context)
+  (.arc context x y radius 0 (* 2 3.14))
+  (.closePath context)
+  (.fill context))
+
+(drawCircle :x (/ width 2) :y (/ height 2) :radius 25)
