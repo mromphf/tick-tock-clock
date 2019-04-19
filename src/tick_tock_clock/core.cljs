@@ -12,6 +12,13 @@
 (set! (.-fillStyle context) "#00f")
 (set! (.-strokeStyle context) "#00f")
 
+(defn drawBigHand [& {:keys [x y]}]
+  (.beginPath context)
+  (.moveTo context x y)
+  (.lineTo context x (- y 200))
+  (.closePath context)
+  (.stroke context))
+
 (defn drawSolidCircle [& {:keys [x y radius]}]
   (.beginPath context)
   (.arc context x y radius 0 doublePi)
@@ -26,3 +33,4 @@
 
 (drawSolidCircle :x (/ width 2) :y (/ height 2) :radius 25)
 (drawEmptyCircle :x (/ width 2) :y (/ height 2) :radius 250)
+(drawBigHand :x (/ width 2) :y (/ height 2))
