@@ -1,7 +1,7 @@
 (ns tick-tock-clock.core)
 
-(def width (.-outerWidth js/window))
-(def height (.-outerHeight js/window))
+(def width (.-innerWidth js/window))
+(def height (.-innerHeight js/window))
 
 (def canvas (.getElementById js/document "clock"))
 (def context (.getContext canvas "2d"))
