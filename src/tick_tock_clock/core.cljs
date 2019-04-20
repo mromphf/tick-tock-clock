@@ -11,18 +11,18 @@
 (set! (.-width canvas) width)
 (set! (.-height canvas) height)
 
-(defn drawSolidCircle [& {:keys [x y radius fill]}]
+(defn drawSolidCircle [& {:keys [radius fill]}]
   (set! (.-lineWidth context) 10)
   (set! (.-fillStyle context) fill)
   (.beginPath context)
-  (.arc context x y radius 0 doublePi)
+  (.arc context 0 0 radius 0 doublePi)
   (.closePath context)
   (.fill context))
 
-(defn drawEmptyCircle [& {:keys [x y radius fill]}]
+(defn drawEmptyCircle [& {:keys [radius fill]}]
   (set! (.-strokeStyle context) "#00f")
   (.beginPath context)
-  (.arc context x y radius 0 doublePi)
+  (.arc context 0 0 radius 0 doublePi)
   (.closePath context)
   (.stroke context))
 
@@ -41,9 +41,9 @@
   (def minutes (.getMinutes now))
   (def seconds (.getSeconds now))
 
-  (drawSolidCircle :x 0 :y 0 :radius rad :fill "#fff")
-  (drawSolidCircle :x 0 :y 0 :radius (* 0.1 rad) :fill "#00f")
-  (drawEmptyCircle :x 0 :y 0 :radius rad :fill "#00f")
+  (drawSolidCircle :radius rad :fill "#fff")
+  (drawSolidCircle :radius (* 0.1 rad) :fill "#00f")
+  (drawEmptyCircle :radius rad :fill "#00f")
   (drawHand :pos (* seconds (/ pi 30)) :radius rad :len 0.9))
 
 (.translate context (/ width 2) (/ height 2))
