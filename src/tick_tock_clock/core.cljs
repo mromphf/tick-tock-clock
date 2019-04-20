@@ -26,8 +26,8 @@
   (.closePath context)
   (.stroke context))
 
-(defn drawHand [& {:keys [pos radius len]}]
-  (set! (.-lineWidth context) 5)
+(defn drawHand [& {:keys [pos radius len wid]}]
+  (set! (.-lineWidth context) wid)
   (set! (.-lineCap context) "round")
   (.beginPath context)
   (.moveTo context 0 0)
@@ -48,11 +48,11 @@
   (drawHand :pos (mod (+ (* hours (/ pi 6)) 
                        (* minutes (/ pi (* 6 60)))
                        (* seconds (/ pi (* 360 60)))) 12) 
-            :radius rad :len 0.6)
+            :radius rad :len 0.6 :wid 10)
   (drawHand :pos (+ (* minutes (/ pi 30))
                     (* seconds (/ pi (* 60 30)))) 
-            :radius rad :len 0.75)
-  (drawHand :pos (* seconds (/ pi 30)) :radius rad :len 0.9))
+            :radius rad :len 0.75 :wid 8)
+  (drawHand :pos (* seconds (/ pi 30)) :radius rad :len 0.9 :wid 5))
 
 (.translate context (/ width 2) (/ height 2))
 (js/setInterval drawClock 1000)
