@@ -28,6 +28,7 @@
 
 (defn drawHand [& {:keys [pos radius len]}]
   (set! (.-lineWidth context) 5)
+  (set! (.-lineCap context) "round")
   (.beginPath context)
   (.moveTo context 0 0)
   (.rotate context pos)
@@ -44,6 +45,13 @@
   (drawSolidCircle :radius rad :fill "#fff")
   (drawSolidCircle :radius (* 0.1 rad) :fill "#00f")
   (drawEmptyCircle :radius rad :fill "#00f")
+  (drawHand :pos (mod (+ (* hours (/ pi 6)) 
+                       (* minutes (/ pi (* 6 60)))
+                       (* seconds (/ pi (* 360 60)))) 12) 
+            :radius rad :len 0.6)
+  (drawHand :pos (+ (* minutes (/ pi 30))
+                    (* seconds (/ pi (* 60 30)))) 
+            :radius rad :len 0.75)
   (drawHand :pos (* seconds (/ pi 30)) :radius rad :len 0.9))
 
 (.translate context (/ width 2) (/ height 2))
