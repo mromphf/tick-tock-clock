@@ -4,6 +4,7 @@
 (def height (.-innerHeight js/window))
 (def pi (.-PI js/Math))
 (def doublePi (* 2 pi))
+(def rad (* height 0.25))
 
 (def canvas (.getElementById js/document "clock"))
 (def context (.getContext canvas "2d"))
@@ -25,12 +26,12 @@
   (.closePath context)
   (.stroke context))
 
-(defn drawHand [pos]
+(defn drawHand [& {:keys [pos radius len]}]
   (set! (.-lineWidth context) 5)
   (.beginPath context)
   (.moveTo context 0 0)
   (.rotate context pos)
-  (.lineTo context 0 (- (* 250 0.9)))
+  (.lineTo context 0 (- (* radius len)))
   (.stroke context)
   (.rotate context (- pos)))
 
@@ -40,10 +41,10 @@
   (def minutes (.getMinutes now))
   (def seconds (.getSeconds now))
 
-  (drawSolidCircle :x 0 :y 0 :radius 250 :fill "#fff")
-  (drawSolidCircle :x 0 :y 0 :radius 25 :fill "#00f")
-  (drawEmptyCircle :x 0 :y 0 :radius 250 :fill "#00f")
-  (drawHand (* seconds (/ pi 30))))
+  (drawSolidCircle :x 0 :y 0 :radius rad :fill "#fff")
+  (drawSolidCircle :x 0 :y 0 :radius (* 0.1 rad) :fill "#00f")
+  (drawEmptyCircle :x 0 :y 0 :radius rad :fill "#00f")
+  (drawHand :pos (* seconds (/ pi 30)) :radius rad :len 0.9))
 
 (.translate context (/ width 2) (/ height 2))
 (js/setInterval drawClock 1000)
