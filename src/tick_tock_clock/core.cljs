@@ -12,6 +12,7 @@
 (def context (.getContext canvas "2d"))
 (set! (.-width canvas) width)
 (set! (.-height canvas) height)
+(.translate context (/ width 2) (/ height 2))
 
 (defn drawSolidCircle [& {:keys [radius fill]}]
   (set! (.-lineWidth context) 10)
@@ -74,5 +75,4 @@
             :radius rad :len 0.75 :wid 8)
   (drawHand :pos (* seconds (/ pi 30)) :radius rad :len 0.9 :wid 5))
 
-(.translate context (/ width 2) (/ height 2))
 (js/setInterval drawClock 1000)
