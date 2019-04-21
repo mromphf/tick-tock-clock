@@ -5,6 +5,8 @@
 (def pi (.-PI js/Math))
 (def doublePi (* 2 pi))
 (def rad (* height 0.25))
+(def fill "#008B8B")
+(def white "#fff")
 
 (def canvas (.getElementById js/document "clock"))
 (def context (.getContext canvas "2d"))
@@ -20,7 +22,7 @@
   (.fill context))
 
 (defn drawEmptyCircle [& {:keys [radius fill]}]
-  (set! (.-strokeStyle context) "#00f")
+  (set! (.-strokeStyle context) fill)
   (.beginPath context)
   (.arc context 0 0 radius 0 doublePi)
   (.closePath context)
@@ -49,7 +51,7 @@
 (defn drawHours [radius]
   (set! (.-lineWidth context) 10)
   (set! (.-lineCap context) "round")
-  (set! (.-strokeStyle context) "#00f")
+  (set! (.-strokeStyle context) fill)
   (def nums (map inc (range 12)))
   (doseq [n nums] (drawSingleHours n radius)))
 
@@ -59,9 +61,9 @@
   (def minutes (.getMinutes now))
   (def seconds (.getSeconds now))
 
-  (drawSolidCircle :radius rad :fill "#fff")
-  (drawSolidCircle :radius (* 0.1 rad) :fill "#00f")
-  (drawEmptyCircle :radius rad :fill "#00f")
+  (drawSolidCircle :radius rad :fill white)
+  (drawSolidCircle :radius (* 0.1 rad) :fill fill)
+  (drawEmptyCircle :radius rad :fill fill)
   (drawHours rad)
   (drawHand :pos (mod (+ (* hours (/ pi 6)) 
                        (* minutes (/ pi (* 6 60)))
