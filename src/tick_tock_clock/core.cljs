@@ -36,6 +36,23 @@
   (.stroke context)
   (.rotate context (- pos)))
 
+(defn drawSingleHours [n radius]
+  (def ang (* n (/ pi 6)))
+  (.rotate context ang)
+  (.beginPath context)
+  (.moveTo context 0 (- (* radius 0.85)))
+  (.lineTo context 0 (-  radius))
+  (.stroke context)
+  (.closePath context)
+  (.rotate context (- ang)))
+
+(defn drawHours [radius]
+  (set! (.-lineWidth context) 10)
+  (set! (.-lineCap context) "round")
+  (set! (.-strokeStyle context) "#00f")
+  (def nums (map inc (range 12)))
+  (doseq [n nums] (drawSingleHours n radius)))
+
 (defn drawClock []
   (def now (js.Date.))
   (def hours (.getHours now))
@@ -45,6 +62,7 @@
   (drawSolidCircle :radius rad :fill "#fff")
   (drawSolidCircle :radius (* 0.1 rad) :fill "#00f")
   (drawEmptyCircle :radius rad :fill "#00f")
+  (drawHours rad)
   (drawHand :pos (mod (+ (* hours (/ pi 6)) 
                        (* minutes (/ pi (* 6 60)))
                        (* seconds (/ pi (* 360 60)))) 12) 
